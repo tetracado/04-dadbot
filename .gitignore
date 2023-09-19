@@ -1,3 +1,11 @@
+#custom
+dbhidden.py
+temp.py
+holidays.pkl
+holidays - backup.pkl
+temp.txt
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

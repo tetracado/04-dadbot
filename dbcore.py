@@ -1,0 +1,206 @@
+# This example requires the 'message_content' intent.
+from discord.ext import tasks, commands
+import dbhidden
+import discord
+import dblist
+import random
+import pickle
+from datetime import datetime
+import schedule
+import time
+
+@tasks.loop(hours=24)
+async def checkblacklist():
+    for guild in client.guilds:
+        if guild.id in blacklist:
+            to_leave=client.get_guild(guild.id)
+            await to_leave.leave()
+            print('left',guild)
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = discord.Client(intents=intents)
+
+with open('holidays.pkl', 'rb') as f:
+    holidays = pickle.load(f)
+
+@client.event
+async def on_ready():
+    print(f'We have logged in as {client.user}, listing current guilds:')
+    checkblacklist.start()
+    
+    for guild in client.guilds:
+        print(guild, guild.id)
+        #blacklist sort of 
+        if guild.id in blacklist:
+            to_leave=client.get_guild(guild.id)
+            await to_leave.leave()
+            print('left',guild)
+
+blacklist=[1053161232535912478, #"Cyberland", supery spammy
+           1070550154417021029 #"Club 57", spammy
+           ]
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+
+    imsmid=[" i'm ", " im "]
+    imsstart=["i'm ", "im "]
+    imsonly=["i'm","im"]
+
+    try:
+        adj=""
+        for word in dblist.adj:
+            #print ('checking',word,'against',message.content)
+            if word in message.content.lower():
+                adj=word
+                print('found',adj,'in',message.content,'from',message.guild, 'with guild id', message.guild.id)
+                break
+        if len (adj)>0:
+            messageparts=message.content.split()
+            #print('checking',adj,'with messageparts',messageparts)
+            listitem=0
+            for part in messageparts:
+                nextpart=messageparts[listitem+1]
+                #print ('checking',part,'listitem',listitem,'parts+1',nextpart)
+                listitem+=1
+                if (part.lower() in imsonly) and (nextpart == adj):
+                    sendmsg="Hi "+nextpart.lower()+", I'm Dad!"
+                    print('sending himessage',sendmsg)
+                    await message.channel.send(sendmsg)
+                    #print('sentmessage')
+                    break
+
+    except:
+        print("im error handled")
+
+
+    jokes=dblist.jokes
+
+    try:
+        if  ("dad" in message.content.lower()) and ("joke" in message.content.lower()):
+            print('found joke in',message.content)
+            sendjoke=random.choice(jokes)
+            print('sending joke',sendjoke)
+            await message.channel.send(sendjoke)
+
+    except:
+        print("joke error handled")
+
+
+    love=("love you dadbot", "love you dad")
+    try:
+        if  any(word in message.content.lower() for word in love):
+            print('found love you in',message.content)
+            print('sending thanks')
+            await message.channel.send("thanks")
+
+    except:
+        print("thanks error handled")
+
+
+    hello=("hello there")
+    try:
+        if  hello == message.content.lower():
+            print('found hello there in',message.content)
+            await message.channel.send("general kenobi")
+
+    except:
+        print("hello there error handled")
+
+    hidad=["hi dad","hello dad","hey dad"]
+
+    author=None
+    greetings=dblist.greetings
+
+    try:
+        if  any(word in message.content.lower() for word in hidad):
+            print('found hidad in',message.content,'from user',message.author)
+            #himessage=message
+            sendhi=random.choice(greetings)
+            author=str(message.author.name)
+            await message.reply(sendhi+", "+author,mention_author=True)
+
+    except:
+        print("hi dad error handled")
+
+    implaying=["i'm playing", "im playing"]
+
+    try:
+        if  any(word in message.content.lower() for word in implaying):
+            print('found implaying in',message.content,'from user',message.author)
+            author=str(message.author.name)
+            await message.reply("Are you winning, "+author+"?",mention_author=True)
+
+    except:
+        print("i'm playing error handled")
+
+    agua=dblist.agua
+
+    try:
+        if  "big iron" in message.content.lower():
+            print('found bigiron in',message.content)
+            #wait message.reply("aguaholder",mention_author=True)
+            await message.channel.send(agua)
+
+    except:
+        print("bigiron error handled")
+
+
+
+    try:
+        if  "saturdays are made for dads" in message.content.lower():
+            print('found saturday in',message.content)
+            await message.reply("and Dad's car!")
+
+    except:
+        print("saturday error handled")
+    
+    try:
+        if "can i" in message.content.lower():
+            print('found cani in',message.content)
+            await message.channel.send("I don't know, can you?")
+
+    except:
+        print("cani error handled")
+
+    mays=("may i", "may we", "can you", "can we", "will you", "are you")
+    nos=dblist.no
+
+    try:
+        if  (any(word in message.content.lower() for word in mays)) and ("dad" in message.content.lower()):
+            print('found mayi in',message.content)
+            await message.channel.send(random.choice(nos))
+
+    except:
+        print("mayi error handled")   
+
+    whatday=("what day is it today","wdiit")         
+
+    try:
+        if  (any(word in message.content.lower() for word in whatday)) and ("dad" in message.content.lower()):
+            print('found what day in',message.content)
+            today=datetime.now()
+            dateonly=datetime(2023, today.month, today.day)
+            todayholidays=holidays[dateonly]
+            await message.channel.send(random.choice(todayholidays))
+
+    except:
+        print("mayi error handled")           
+
+
+client.run(dbhidden.token)
+
+
+# dateonly=datetime(2023, currentdate.month, currentdate.day)
+# print(dateonly)
+# print(loaded_dict)
+
+# schedule.every(600).minutes.do(cycleblacklist)
+
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
