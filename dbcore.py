@@ -42,6 +42,8 @@ blacklist=[1053161232535912478, #"Cyberland", supery spammy
            1070550154417021029 #"Club 57", spammy
            ]
 
+canieligible=[]
+
 @client.event
 async def on_message(message):
     if message.author == client.user:
@@ -162,6 +164,7 @@ async def on_message(message):
     try:
         if "can i" in message.content.lower():
             print('found cani in',message.content)
+            canieligible.append(message.author.name)
             await message.channel.send("I don't know, can you?")
 
     except:
@@ -171,8 +174,9 @@ async def on_message(message):
     nos=dblist.no
 
     try:
-        if  (any(word in message.content.lower() for word in mays)) and ("dad" in message.content.lower()):
+        if  (any(word in message.content.lower() for word in mays)) and (message.author.name in canieligible):
             print('found mayi in',message.content)
+            canieligible.remove(message.author.name)
             await message.channel.send(random.choice(nos))
 
     except:
