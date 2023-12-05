@@ -4,6 +4,9 @@ temp.py
 holidays.pkl
 holidays - backup.pkl
 temp.txt
+saved_dictionary.pkl
+dict.json
+holidays.json
 
 
 # Byte-compiled / optimized / DLL files

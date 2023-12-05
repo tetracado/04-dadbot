@@ -1,7 +1,6 @@
 from selenium import webdriver
 import platform
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.core.utils import ChromeType
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -26,7 +25,7 @@ driver_path='/usr/bin/chromedriver'
 
 service = Service(ChromeDriverManager().install())
 
-driver = webdriver.Chrome(options=options,service=service)
+driver = webdriver.Chrome#(options=options,service=service)
 
 
 def openlink(link):

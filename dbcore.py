@@ -8,6 +8,7 @@ import pickle
 from datetime import datetime
 import schedule
 import time
+import os
 
 @tasks.loop(hours=24)
 async def checkblacklist():
@@ -22,8 +23,15 @@ intents.message_content = True
 
 client = discord.Client(intents=intents)
 
-with open('holidays.pkl', 'rb') as f:
+myfilepath=os.path.dirname(os.path.abspath(__file__))
+holidaypath=os.path.join(myfilepath, 'holidays.pkl')
+#print(holidaypath)
+#abspath=pathlib.Path("holidays.pkl").absolute()
+#print(abspath)
+
+with open(holidaypath, 'rb') as f:
     holidays = pickle.load(f)
+    print(holidays)
 
 @client.event
 async def on_ready():
