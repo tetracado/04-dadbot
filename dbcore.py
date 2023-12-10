@@ -47,10 +47,19 @@ async def on_ready():
             print('left',guild)
 
 blacklist=[1053161232535912478, #"Cyberland", supery spammy
-           1070550154417021029 #"Club 57", spammy
+           1070550154417021029, #"Club 57", spammy
+           899144844381917254, #Bot Repo, spammy
            ]
 
 canieligible=[]
+
+def getdatesuffix(myDate):
+    date_suffix = ["th", "st", "nd", "rd"]
+
+    if myDate % 10 in [1, 2, 3] and myDate not in [11, 12, 13]:
+        return date_suffix[myDate % 10]
+    else:
+        return date_suffix[0]
 
 @client.event
 async def on_message(message):
@@ -120,6 +129,16 @@ async def on_message(message):
 
     except:
         print("hello there error handled")
+
+
+    thanksdad=["thanks dad","thanks dadbot"]
+    try:
+        if any(word in message.content.lower() for word in thanksdad):
+            print('found thanks in',message.content,'from user',message.author)
+            await message.reply(random.choice(dblist.welcome)+", "+str(message.author.name))
+
+    except:
+        print("welcome error handled")
 
     hidad=["hi dad","hello dad","hey dad"]
 
@@ -196,23 +215,12 @@ async def on_message(message):
         if  (any(word in message.content.lower() for word in whatday)) and ("dad" in message.content.lower()):
             print('found what day in',message.content)
             today=datetime.now()
-            dateonly=datetime(2023, today.month, today.day)
-            todayholidays=holidays[dateonly]
+            todayholidays=holidays[today.strftime("%B")+' '+str(today.day)+getdatesuffix(today.day)+', '+str(today.year)]
             await message.channel.send(random.choice(todayholidays))
 
     except:
-        print("mayi error handled")           
+        print("wdiitd error handled")           
 
 
 client.run(dbhidden.token)
 
-
-# dateonly=datetime(2023, currentdate.month, currentdate.day)
-# print(dateonly)
-# print(loaded_dict)
-
-# schedule.every(600).minutes.do(cycleblacklist)
-
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)

@@ -25,7 +25,7 @@ driver_path='/usr/bin/chromedriver'
 
 service = Service(ChromeDriverManager().install())
 
-driver = webdriver.Chrome#(options=options,service=service)
+driver = webdriver.Chrome(options=options,service=service)
 
 
 def openlink(link):

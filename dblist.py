@@ -515,3 +515,25 @@ no=[
     "You can't be serious",
     "You have got to be kidding me"
 ]
+
+welcome=[
+    "Always glad to help",
+    "You're very welcome",
+    "You're welcome",
+    "I'm always here to help",
+    "You're so kind",
+    "The pleasure is all mine",
+    "Pleased to be of assistance",
+    "Anytime",
+    "Don't mention it",
+    "No problem",
+    "No worries",
+    "You got it",
+    "Glad that I could be of assistance",
+    "I am here to serve",
+    "Happy to support the team",
+    "Just doing my job",
+    "No thanks are necessary",
+    "Not a problem",
+    "My pleasure"
+]
