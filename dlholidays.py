@@ -70,6 +70,6 @@ def stealholidays():
     with open('holidays.pkl', 'wb') as f:
         pickle.dump(holidays, f)
 
-testlink='https://www.checkiday.com/1/1/2023'
+testlink='https://www.checkiday.com/1/1/2024'
 stealholidays()
 #print(getdetails())
