@@ -70,6 +70,8 @@ async def on_message(message):
     imsstart=["i'm ", "im "]
     imsonly=["i'm","im"]
 
+    global knockknock
+
     try:
         adj=""
         for word in dblist.adj:
@@ -100,7 +102,7 @@ async def on_message(message):
     jokes=dblist.jokes
 
     try:
-        if  ("dad" in message.content.lower()) and ("joke" in message.content.lower()):
+        if  ("dad" in message.content.lower()) and ("joke" in message.content.lower()) and ("knock" not in message.content.lower()):
             print('found joke in',message.content)
             sendjoke=random.choice(jokes)
             print('sending joke',sendjoke)
@@ -189,7 +191,7 @@ async def on_message(message):
         print("saturday error handled")
     
     try:
-        if "can i" in message.content.lower():
+        if ("can i" in message.content.lower()) and ("knock" not in message.content.lower()):
             print('found cani in',message.content)
             canieligible.append(message.author.name)
             await message.channel.send("I don't know, can you?")
@@ -201,7 +203,7 @@ async def on_message(message):
     nos=dblist.no
 
     try:
-        if  (any(word in message.content.lower() for word in mays)) and (message.author.name in canieligible):
+        if  (any(word in message.content.lower() for word in mays)) and (message.author.name in canieligible) and ("knock" not in message.content.lower()):
             print('found mayi in',message.content)
             canieligible.remove(message.author.name)
             await message.channel.send(random.choice(nos))
@@ -219,8 +221,40 @@ async def on_message(message):
             await message.channel.send(random.choice(todayholidays))
 
     except:
-        print("wdiitd error handled")           
+        print("wdiitd error handled")
 
+    knockknocklist=("knockknock","knock-knock","knock knock")
+
+    try:
+        if (any(word in message.content.lower() for word in knockknocklist) and ("dad" in message.content.lower())):
+            print('initiating knock knock cycle')
+           # print('knockknockvar preinit',knockknock)
+            knockknock=True
+           # print('knockknockvar postinit',knockknock)
+            await message.channel.send('Knock knock')
+    except:
+        print('knock knock initiation error handled')
+        
+    whosthere=("whos there", "who's there")
+
+    try:
+        if  (any(word in message.content.lower() for word in whosthere) and knockknock):
+             #print('knockknockvar prewhosethere',knockknock)
+             await message.channel.send('Towels')
+    except:
+        print('knock knock whosethere error handled')
+
+    try:
+        if  (('towels who' in message.content.lower()) and knockknock):
+             #print('knockknockvar presendresponse',knockknock)
+             await message.channel.send("No silly! Towels don't hoo, owls hoo!")
+             knockknock=False
+             print('closed knock knock cycle')
+             #print('knockknockvar postsendrespose',knockknock)
+
+    except:
+        print('knock knock whosethere error handled')
+                        
+knockknock = False
 
 client.run(dbhidden.token)
-
