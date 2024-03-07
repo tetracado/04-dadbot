@@ -64,7 +64,7 @@ adj=[
 'excited',
 'exuberant',
 'fair',
-'faithful',
+#faithful',
 'fantastic',
 'fearful',
 'fierce',
@@ -540,4 +540,61 @@ welcome=[
     "No thanks are necessary",
     "Not a problem",
     "My pleasure"
+]
+
+knockknockinit=[
+    'Isabel',
+    'Hatch',
+    'Dishes',
+    'Ice cream',
+    'Luke',
+    'Justin',
+    'Honeydew',
+    'Wooden shoe',
+    'Gorilla',
+    'Harry',
+    'Octopus',
+    'Frog',
+    'Owl',
+    'Tank',
+    'Alpaca',
+    'Orange',
+    'Olive',
+    "Boo",
+    "Oink oink",
+    "Owls",
+    "Abe Lincoln",
+    "Adorable",
+    "Goliath",
+    "Cargo",
+    "Towels"
+    
+]
+
+knockknockresp=[
+    'Isabel broken? I had to knock!',
+    'Bless you!',
+    'Dishes the police, open up!',
+    'Ice cream every time I see a scary movie!',
+    'Luke through the peephole and find out!',
+    'Justin time for dinner!',
+    'Honeydew you know how much I love you?',
+    'Wooden shoe you like to hear another joke?',
+    "Gorilla me a hamburger, I'm starving!",
+    "Harry up and open the door, it's freezing!",
+    'Octopus your heands together for this next one!',
+    'Froget about it!',
+    'Owl always love you!',
+    "You're welcome!",
+    'Alpaca the suitcase, you load up the car!',
+    "Orange you glad we're telling jokes?",
+    "Olive your jokes are bad.",
+    "Don't cry, it's just a joke!",
+    "Are you a pig or an owl?",
+    "They sure do!",
+    "You don't recognize me?",
+    "Adorabell don't work, that's why I knocked!",
+    "Cargo beep beep!",
+    "No silly! Towels don't hoo, owls hoo!"
+
 ]

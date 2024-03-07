@@ -66,11 +66,11 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    imsmid=[" i'm ", " im "]
-    imsstart=["i'm ", "im "]
     imsonly=["i'm","im"]
 
     global knockknock
+    global knockknockwho
+    global knockknockindex
 
     try:
         adj=""
@@ -81,19 +81,27 @@ async def on_message(message):
                 print('found',adj,'in',message.content,'from',message.guild, 'with guild id', message.guild.id)
                 break
         if len (adj)>0:
-            messageparts=message.content.split()
+            imsadj=["i'm "+adj,"im "+adj]
+            if any(word in message.content.lower() for word in imsadj):
+                print('found',word,'in ',message.content)
+                sendmsg="Hi "+adj+", I'm Dad!"
+                print('sending himessage',sendmsg)
+                await message.cahnnel.send(sendmsg)
+
+
+            #messageparts=message.content.split()
             #print('checking',adj,'with messageparts',messageparts)
-            listitem=0
-            for part in messageparts:
-                nextpart=messageparts[listitem+1]
-                #print ('checking',part,'listitem',listitem,'parts+1',nextpart)
-                listitem+=1
-                if (part.lower() in imsonly) and (nextpart == adj):
-                    sendmsg="Hi "+nextpart.lower()+", I'm Dad!"
-                    print('sending himessage',sendmsg)
-                    await message.channel.send(sendmsg)
-                    #print('sentmessage')
-                    break
+            #listitem=0
+            #for part in messageparts:
+           #     nextpart=messageparts[listitem+1]
+            #    #print ('checking',part,'listitem',listitem,'parts+1',nextpart)
+             #   listitem+=1
+              #  if (part.lower() in imsonly) and (nextpart == adj):
+               #     sendmsg="Hi "+nextpart.lower()+", I'm Dad!"
+                #    print('sending himessage',sendmsg)
+                   # await message.channel.send(sendmsg)
+                  #  #print('sentmessage')
+                   # break
 
     except:
         print("im error handled")
@@ -235,26 +243,43 @@ async def on_message(message):
     except:
         print('knock knock initiation error handled')
         
-    whosthere=("whos there", "who's there")
+    whosthere=("whos there", "who's there", "whose there")
+
+    knockknockinitlist=dblist.knockknockinit
 
     try:
         if  (any(word in message.content.lower() for word in whosthere) and knockknock):
              #print('knockknockvar prewhosethere',knockknock)
-             await message.channel.send('Towels')
+             knockknockinit=random.choice(knockknockinitlist)
+             knockknockwho=knockknockinit+' who'
+             knockknockindex=knockknockinitlist.index(knockknockinit)
+             print('knockknockwho',knockknockwho,'knockknockindex',knockknockindex)
+             await message.channel.send(knockknockinit)
     except:
-        print('knock knock whosethere error handled')
+        print('knock knock first response error handled')
 
+    knockknockresponselist=dblist.knockknockresp
+#(knockknockwho != None) and 
     try:
-        if  (('towels who' in message.content.lower()) and knockknock):
+        #print('-------------------------------knockknockwho',knockknockwho,'knockknockindex',knockknockindex,'knockknockbool',knockknock)
+        #print('knockknockwho',knockknockwho)
+        #print('message',message.content.lower())
+        #print(knockknockwho,knockknock)
+        if  (knockknockwho != None) and (knockknockwho.lower() in message.content.lower()) and knockknock:
+             #print('pass2')
              #print('knockknockvar presendresponse',knockknock)
-             await message.channel.send("No silly! Towels don't hoo, owls hoo!")
+             await message.channel.send(knockknockresponselist[knockknockindex])
              knockknock=False
+             knockknockwho=None
+             knockknockindex=None
              print('closed knock knock cycle')
              #print('knockknockvar postsendrespose',knockknock)
 
     except:
-        print('knock knock whosethere error handled')
+        print('knock knock final response error handled')
                         
 knockknock = False
+knockknockwho=None
+knocknockindex=None
 
 client.run(dbhidden.token)
